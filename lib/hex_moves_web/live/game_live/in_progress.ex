@@ -10,10 +10,14 @@ defmodule HexMovesWeb.GameLive.InProgress do
           <%= for game <- @games_in_progress do %>
             <div class="card bg-base-100 card-sm shadow-sm">
               <div class="card-body">
-                <h2 class="card-title">{game.name}</h2>
-                <p>
+                <h2 class="card-title link link-primary">
+                  <.link href={~p"/games/#{game.id}"}>
+                    {game.name}
+                  </.link>
+                </h2>
+                <%!-- <p>
                   Some game description or details can go here.
-                </p>
+                </p> --%>
                 <div class="justify-end card-actions">
                   <%= if Enum.any?(game.seats, &(&1.user_id == @current_scope.user.id)) do %>
                     <button class="btn btn-primary btn-sm">Play</button>
