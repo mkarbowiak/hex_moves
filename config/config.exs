@@ -7,6 +7,19 @@
 # General application configuration
 import Config
 
+config :hex_moves, :scopes,
+  user: [
+    default: true,
+    module: HexMoves.Auth.Scope,
+    assign_key: :current_scope,
+    access_path: [:user, :id],
+    schema_key: :user_id,
+    schema_type: :id,
+    schema_table: :users,
+    test_data_fixture: HexMoves.AuthFixtures,
+    test_setup_helper: :register_and_log_in_user
+  ]
+
 config :hex_moves,
   ecto_repos: [HexMoves.Repo],
   generators: [timestamp_type: :utc_datetime]

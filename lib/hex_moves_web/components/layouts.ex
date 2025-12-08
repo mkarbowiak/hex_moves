@@ -42,7 +42,7 @@ defmodule HexMovesWeb.Layouts do
           <span class="text-sm font-semibold">v{Application.spec(:phoenix, :vsn)}</span>
         </a>
       </div>
-      <div class="flex-none">
+      <%!-- <div class="flex-none">
         <ul class="flex flex-column px-1 space-x-4 items-center">
           <li>
             <a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a>
@@ -59,7 +59,7 @@ defmodule HexMovesWeb.Layouts do
             </a>
           </li>
         </ul>
-      </div>
+      </div> --%>
     </header>
 
     <main class="px-4 py-20 sm:px-6 lg:px-8">
