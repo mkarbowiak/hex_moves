@@ -17,12 +17,6 @@ defmodule HexMovesWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", HexMovesWeb do
-    pipe_through :browser
-
-    get "/", PageController, :home
-  end
-
   # Other scopes may use custom stacks.
   # scope "/api", HexMovesWeb do
   #   pipe_through :api
@@ -61,6 +55,8 @@ defmodule HexMovesWeb.Router do
 
   scope "/", HexMovesWeb do
     pipe_through [:browser]
+
+    get "/", PageController, :home
 
     live_session :current_user,
       on_mount: [{HexMovesWeb.UserAuth, :mount_current_scope}] do
