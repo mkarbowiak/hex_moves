@@ -12,6 +12,8 @@ defmodule HexMoves.Game.Models.Game do
       values: [:waiting_for_players, :in_progress, :completed],
       default: :waiting_for_players
 
+    has_many :seats, HexMoves.Game.Models.Seat
+
     timestamps(type: :utc_datetime)
   end
 
