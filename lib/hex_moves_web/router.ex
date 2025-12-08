@@ -46,8 +46,14 @@ defmodule HexMovesWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{HexMovesWeb.UserAuth, :require_authenticated}] do
-      live "/users/settings", UserLive.Settings, :edit
-      live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
+      scope "/users" do
+        live "/settings", UserLive.Settings, :edit
+        live "/settings/confirm-email/:token", UserLive.Settings, :confirm_email
+      end
+
+      scope "/games" do
+        live "/in-progress", GameLive.InProgress, :index
+      end
     end
 
     post "/users/update-password", UserSessionController, :update_password
