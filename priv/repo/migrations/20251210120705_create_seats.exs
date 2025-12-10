@@ -3,7 +3,8 @@ defmodule HexMoves.Repo.Migrations.CreateSeats do
 
   def change do
     create table(:seats) do
-      add :status, :string, null: false, default: "open"
+      add :status, :string, null: false, default: "invited"
+      add :owner, :boolean, null: false, default: false
 
       add :game_id, references(:games, on_delete: :delete_all), null: false
       add :user_id, references(:users, on_delete: :nilify_all)

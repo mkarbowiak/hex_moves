@@ -19,7 +19,7 @@ defmodule HexMoves.Game.Models.GameTest do
     assert Repo.insert(changeset)
   end
 
-  test "changeset/2 with invalid seats" do
+  test "validates seats min < max" do
     invalid_attrs = %{
       name: "Ra",
       sid: :ra,

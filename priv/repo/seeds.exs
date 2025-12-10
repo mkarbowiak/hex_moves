@@ -18,6 +18,7 @@ HexMoves.Repo.insert_all(HexMoves.Game.Models.Game, [
     min_seats: 2,
     max_seats: 5,
     status: :in_progress,
+    private: false,
     inserted_at: DateTime.truncate(DateTime.utc_now(), :second),
     updated_at: DateTime.truncate(DateTime.utc_now(), :second)
   },
@@ -27,6 +28,7 @@ HexMoves.Repo.insert_all(HexMoves.Game.Models.Game, [
     min_seats: 2,
     max_seats: 4,
     status: :in_progress,
+    private: false,
     inserted_at: DateTime.truncate(DateTime.utc_now(), :second),
     updated_at: DateTime.truncate(DateTime.utc_now(), :second)
   },
@@ -36,6 +38,7 @@ HexMoves.Repo.insert_all(HexMoves.Game.Models.Game, [
     min_seats: 2,
     max_seats: 4,
     status: :in_progress,
+    private: true,
     inserted_at: DateTime.truncate(DateTime.utc_now(), :second),
     updated_at: DateTime.truncate(DateTime.utc_now(), :second)
   },
@@ -44,6 +47,7 @@ HexMoves.Repo.insert_all(HexMoves.Game.Models.Game, [
     sid: :ra,
     min_seats: 2,
     max_seats: 5,
+    private: true,
     status: :waiting_for_players,
     inserted_at: DateTime.truncate(DateTime.utc_now(), :second),
     updated_at: DateTime.truncate(DateTime.utc_now(), :second)
@@ -53,7 +57,8 @@ HexMoves.Repo.insert_all(HexMoves.Game.Models.Game, [
     sid: :ra,
     min_seats: 2,
     max_seats: 5,
-    status: :completed,
+    private: true,
+    status: :finished,
     inserted_at: DateTime.truncate(DateTime.utc_now(), :second),
     updated_at: DateTime.truncate(DateTime.utc_now(), :second)
   }
@@ -66,7 +71,7 @@ Enum.each(games, fn game ->
     %{
       game_id: game.id,
       user_id: user.id,
-      status: Enum.random([:taken, :invited]),
+      status: Enum.random([:joined, :invited]),
       inserted_at: DateTime.truncate(DateTime.utc_now(), :second),
       updated_at: DateTime.truncate(DateTime.utc_now(), :second)
     }

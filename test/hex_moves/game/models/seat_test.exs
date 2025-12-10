@@ -12,12 +12,10 @@ defmodule HexMoves.Game.Models.SeatTest do
     user = user_fixture()
 
     valid_attrs = %{
-      status: :open,
-      game_id: game.id,
-      user_id: user.id
+      status: :invited
     }
 
-    changeset = Seat.changeset(valid_attrs)
+    changeset = Seat.changeset(game, user, valid_attrs)
     assert changeset.valid?
 
     assert Repo.insert(changeset)

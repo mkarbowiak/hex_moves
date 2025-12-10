@@ -10,7 +10,8 @@ defmodule HexMoves.Factory do
       sid: :ra,
       min_seats: 2,
       max_seats: 5,
-      status: :waiting_for_players
+      status: :waiting_for_players,
+      private: false
     }
   end
 

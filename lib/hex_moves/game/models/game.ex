@@ -7,9 +7,10 @@ defmodule HexMoves.Game.Models.Game do
     field :sid, Ecto.Enum, values: [:ra, :brass, :wotr]
     field :min_seats, :integer
     field :max_seats, :integer
+    field :private, :boolean, default: false
 
     field :status, Ecto.Enum,
-      values: [:waiting_for_players, :in_progress, :completed],
+      values: [:waiting_for_players, :in_progress, :finished],
       default: :waiting_for_players
 
     has_many :seats, HexMoves.Game.Models.Seat
@@ -20,11 +21,17 @@ defmodule HexMoves.Game.Models.Game do
   @doc false
   def changeset(game \\ %__MODULE__{}, attrs) do
     game
-    |> cast(attrs, [:name, :sid, :min_seats, :max_seats, :status])
-    |> validate_required([:name, :sid, :min_seats, :max_seats, :status])
+    |> cast(attrs, [:name, :sid, :min_seats, :max_seats, :status, :private])
+    |> validate_required([:name, :sid, :min_seats, :max_seats, :status, :private])
     |> validate_number(:min_seats, greater_than: 0)
     |> validate_number(:max_seats, greater_than: 0)
     |> validate_seats_order()
+  end
+
+  def update_status_changeset(game, status) do
+    game
+    |> change()
+    |> put_change(:status, status)
   end
 
   defp validate_seats_order(changeset) do

@@ -8,6 +8,7 @@ defmodule HexMoves.Repo.Migrations.CreateGames do
       add :min_seats, :integer, null: false
       add :max_seats, :integer, null: false
       add :status, :string, null: false, default: "waiting_for_players"
+      add :private, :boolean, null: false, default: false
 
       timestamps()
     end

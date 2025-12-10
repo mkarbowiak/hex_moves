@@ -19,9 +19,10 @@ defmodule HexMoves.Game.Queries.Game do
       [%Game{}, ...]
 
   """
-  def all_for_user(%HexMoves.Auth.User{} = user) do
+  def by_status(%HexMoves.Auth.User{} = user, status) do
     user
     |> visible()
+    |> where([games: g], g.status == ^status)
     |> Repo.all()
     |> Repo.preload(:seats)
   end
@@ -30,6 +31,6 @@ defmodule HexMoves.Game.Queries.Game do
     query
     |> from(as: :games)
     |> join(:left, [games: g], s in assoc(g, :seats), as: :seats)
-    |> where([seats: s], s.user_id == ^user_id and s.status in [:taken, :invited])
+    |> where([seats: s], s.user_id == ^user_id and s.status in [:joined, :invited])
   end
 end

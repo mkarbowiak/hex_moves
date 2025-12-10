@@ -52,7 +52,7 @@ defmodule HexMovesWeb.Router do
       end
 
       scope "/games" do
-        live "/", GameLive.InProgress, :index
+        live "/", GameLive.Active, :index
         live "/:id", GameLive.Show, :show
       end
     end
