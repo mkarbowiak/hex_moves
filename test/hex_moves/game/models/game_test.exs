@@ -3,6 +3,8 @@ defmodule HexMoves.Game.Models.GameTest do
 
   alias HexMoves.Game.Models.Game
 
+  alias HexMoves.Repo
+
   test "changeset/2 with valid data" do
     valid_attrs = %{
       name: "Ra",
@@ -13,6 +15,8 @@ defmodule HexMoves.Game.Models.GameTest do
 
     changeset = Game.changeset(valid_attrs)
     assert changeset.valid?
+
+    assert Repo.insert(changeset)
   end
 
   test "changeset/2 with invalid seats" do

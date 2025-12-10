@@ -4,7 +4,7 @@ defmodule HexMoves.Game.Models.Game do
 
   schema "games" do
     field :name, :string
-    field :sid, Ecto.Enum, values: [:ra]
+    field :sid, Ecto.Enum, values: [:ra, :brass, :wotr]
     field :min_seats, :integer
     field :max_seats, :integer
 

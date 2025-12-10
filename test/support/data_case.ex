@@ -24,6 +24,7 @@ defmodule HexMoves.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import HexMoves.DataCase
+      import HexMoves.Factory
     end
   end
 

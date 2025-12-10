@@ -3,7 +3,7 @@ defmodule HexMoves.Game.Models.Seat do
   import Ecto.Changeset
 
   schema "seats" do
-    field :status, Ecto.Enum, values: [:available, :invited, :occupied], default: :available
+    field :status, Ecto.Enum, values: [:open, :invited, :taken], default: :open
 
     belongs_to :game, HexMoves.Game.Models.Game
     belongs_to :user, HexMoves.Auth.User
@@ -12,9 +12,17 @@ defmodule HexMoves.Game.Models.Seat do
   end
 
   @doc false
-  def changeset(seat \\ %__MODULE__{}, attrs) do
+  def changeset(seat \\ %__MODULE__{}, game, user, attrs) do
     seat
-    |> cast(attrs, [:status, :game_id, :user_id])
-    |> validate_required([:status, :game_id])
+    |> cast(attrs, [:status])
+    |> validate_required([:status])
+    |> put_assoc(:game, game)
+    |> put_assoc(:user, user)
+  end
+
+  def update_status_changeset(seat, status) do
+    seat
+    |> change()
+    |> put_change(:status, status)
   end
 end
