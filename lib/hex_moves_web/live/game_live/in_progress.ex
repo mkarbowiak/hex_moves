@@ -1,4 +1,5 @@
 defmodule HexMovesWeb.GameLive.InProgress do
+  require Logger
   use HexMovesWeb, :live_view
 
   @impl true
@@ -20,9 +21,19 @@ defmodule HexMovesWeb.GameLive.InProgress do
                 </p> --%>
                 <div class="justify-end card-actions">
                   <%= if Enum.any?(game.seats, &(&1.user_id == @current_scope.user.id)) do %>
-                    <button class="btn btn-primary btn-sm">Play</button>
+                    <button class="btn btn-primary btn-sm">
+                      <.link href={~p"/games/#{game.id}"}>
+                        Play
+                      </.link>
+                    </button>
                   <% else %>
-                    <button class="btn btn-secondary btn-sm">Join</button>
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      phx-click="join_game"
+                      phx-value-game-id={game.id}
+                    >
+                      Join
+                    </button>
                   <% end %>
                 </div>
               </div>
@@ -44,5 +55,30 @@ defmodule HexMovesWeb.GameLive.InProgress do
       |> assign(:games_in_progress, games_in_progress)
 
     {:ok, socket}
+  end
+
+  @impl true
+  def handle_event("join_game", %{"game-id" => game_id}, socket) do
+    game_id = String.to_integer(game_id)
+
+    games_in_progress =
+      Enum.map(socket.assigns.games_in_progress, fn game ->
+        if game.id == game_id do
+          Map.update!(game, :seats, fn seats ->
+            seats ++
+              [
+                %HexMoves.Game.Models.Seat{
+                  id: 999,
+                  game_id: game_id,
+                  user_id: socket.assigns.current_scope.user.id
+                }
+              ]
+          end)
+        else
+          game
+        end
+      end)
+
+    {:noreply, assign(socket, games_in_progress: games_in_progress)}
   end
 end
