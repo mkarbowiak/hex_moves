@@ -11,6 +11,16 @@ defmodule HexMoves.Game.Queries.Game do
   alias HexMoves.Repo
 
   @doc """
+  Returns the game with the given id if visible to the user.
+  """
+  def get!(%HexMoves.Auth.User{} = user, id) do
+    user
+    |> visible()
+    |> where([games: g], g.id == ^id)
+    |> Repo.one!()
+  end
+
+  @doc """
   Returns the list of games in progress for a given user.
 
   ## Examples
@@ -24,7 +34,7 @@ defmodule HexMoves.Game.Queries.Game do
     |> visible()
     |> where([games: g], g.status == ^status)
     |> Repo.all()
-    |> Repo.preload(:seats)
+    |> Repo.preload(seats: :user)
   end
 
   defp visible(query \\ Game, %User{id: user_id}) do
